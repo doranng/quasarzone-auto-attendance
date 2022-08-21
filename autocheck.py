@@ -1,5 +1,6 @@
 """
 quasar-zone auto attendance check
+v0.1.0
 """
 import undetected_chromedriver as uc
 from cryptography.fernet import Fernet
