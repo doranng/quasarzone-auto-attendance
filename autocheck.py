@@ -6,10 +6,8 @@ import undetected_chromedriver as uc
 from cryptography.fernet import Fernet
 from getpass import getpass
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 
 fernet = Fernet(bytes(b'8bfv1k2-gZ74BDdUmT6T3kA66eZSJSbHr6YtPGgZ598='))
 
@@ -33,39 +31,16 @@ wait = WebDriverWait(driver, 2)
 driver.implicitly_wait(2)
 browser = driver
 
-browser.get('https://quasarzone.com/login?nextUrl=https://quasarzone.com/')
+browser.get('https://quasarzone.com/ajax/user/attendanceInsert')
+
+browser.find_element(by=By.NAME, value="login_id").send_keys(_id)
+browser.find_element(by=By.NAME, value="password").send_keys(_pw)
+browser.find_element(by=By.CLASS_NAME, value="login-bt").click()
+
+browser.get('https://quasarplay.com/ajax/user/attendanceInsert')
 
 browser.find_element(by=By.NAME, value="login_id").send_keys(_id)
 browser.find_element(by=By.NAME, value="password").send_keys(_pw)
 browser.find_element(by=By.XPATH, value='//*[@class="login-bt"]/a').click()
-
-browser.get('https://quasarzone.com/users/attendance')
-
-try:
-    browser.find_element(by=By.XPATH, value='//*[@onclick="anttendanceCheck()"]').click()
-    print("check succeeded")
-except NoSuchElementException:
-    print("already checked")
-
-try:
-    wait.until(ec.alert_is_present())
-    alert = browser.switch_to.alert
-    alert.dismiss()
-except TimeoutException:
-    print("no alert")
-
-browser.get('https://quasarplay.com/login?nextUrl=https://quasarplay.com/')
-
-browser.find_element(by=By.NAME, value="login_id").send_keys(_id)
-browser.find_element(by=By.NAME, value="password").send_keys(_pw)
-browser.find_element(by=By.XPATH, value='//*[@class="login-bt"]/a').click()
-
-browser.get('https://quasarplay.com/users/attendance')
-
-try:
-    browser.find_element(by=By.XPATH, value='//*[@onclick="anttendanceCheck()"]').click()
-    print("check succeeded")
-except NoSuchElementException:
-    print("already checked")
 
 browser.quit()
