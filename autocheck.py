@@ -2,6 +2,8 @@
 quasar-zone auto attendance check
 v0.2.0
 """
+import json
+import logging
 import undetected_chromedriver as uc
 from cryptography.fernet import Fernet
 from getpass import getpass
@@ -29,18 +31,25 @@ options = webdriver.ChromeOptions()
 driver = uc.Chrome(use_subprocess=True, options=options)
 wait = WebDriverWait(driver, 2)
 driver.implicitly_wait(2)
-browser = driver
 
-browser.get('https://quasarzone.com/ajax/user/attendanceInsert')
+driver.get('https://quasarzone.com/ajax/user/attendanceInsert')
 
-browser.find_element(by=By.NAME, value="login_id").send_keys(_id)
-browser.find_element(by=By.NAME, value="password").send_keys(_pw)
-browser.find_element(by=By.CLASS_NAME, value="login-bt").click()
+driver.find_element(by=By.NAME, value="login_id").send_keys(_id)
+driver.find_element(by=By.NAME, value="password").send_keys(_pw)
+driver.find_element(by=By.CLASS_NAME, value="login-bt").click()
 
-browser.get('https://quasarplay.com/ajax/user/attendanceInsert')
+results = [json.loads(driver.find_element(by=By.TAG_NAME, value="body").text)]
+results[-1]['site'] = 'QuasarZone'
 
-browser.find_element(by=By.NAME, value="login_id").send_keys(_id)
-browser.find_element(by=By.NAME, value="password").send_keys(_pw)
-browser.find_element(by=By.XPATH, value='//*[@class="login-bt"]/a').click()
+driver.get('https://quasarplay.com/ajax/user/attendanceInsert')
 
-browser.quit()
+driver.find_element(by=By.NAME, value="login_id").send_keys(_id)
+driver.find_element(by=By.NAME, value="password").send_keys(_pw)
+driver.find_element(by=By.XPATH, value='//*[@class="login-bt"]/a').click()
+
+results.append(json.loads(driver.find_element(by=By.TAG_NAME, value="body").text))
+results[-1]['site'] = 'QuasarPlay'
+
+for result in results:
+    if result['result'] == 'fail':
+        logging.error('[' + result['site'] + '] ' + result['msg'])
