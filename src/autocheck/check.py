@@ -2,22 +2,24 @@ import json
 from selenium.webdriver.common.by import By
 from urllib import parse
 
-URL_ZONE = 'https://quasarzone.com/ajax/user/attendanceInsert'
-URL_PLAY = 'https://quasarplay.com/ajax/user/attendanceInsert'
 
+class Check:
+    def __init__(self):
+        self.__url_zone = 'https://quasarzone.com/ajax/user/attendanceInsert'
+        self.__url_play = 'https://quasarplay.com/ajax/user/attendanceInsert'
 
-def check_core(driver, url, user_data):
-    driver.get(url)
-    driver.find_element(by=By.NAME, value="login_id").send_keys(user_data['id'])
-    driver.find_element(by=By.NAME, value="password").send_keys(user_data['pw'])
-    driver.find_element(by=By.CLASS_NAME, value="login-bt").click()
+    def check(self, driver, user_data):
+        results = [self.__check_core(driver, self.__url_zone, user_data), self.__check_core(driver, self.__url_play, user_data)]
+        return results
 
-    result = json.loads(driver.find_element(by=By.TAG_NAME, value="body").text)
-    result['netloc'] = parse.urlparse(url).netloc
+    @staticmethod
+    def __check_core(driver, url, user):
+        driver.get(url)
+        driver.find_element(by=By.NAME, value="login_id").send_keys(user.id)
+        driver.find_element(by=By.NAME, value="password").send_keys(user.pw)
+        driver.find_element(by=By.CLASS_NAME, value="login-bt").click()
 
-    return result
+        result = json.loads(driver.find_element(by=By.TAG_NAME, value="body").text)
+        result['netloc'] = parse.urlparse(url).netloc
 
-
-def check(driver, user_data):
-    results = [check_core(driver, URL_ZONE, user_data), check_core(driver, URL_PLAY, user_data)]
-    return results
+        return result
