@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 import telegram
-from decouple import config, UndefinedValueError
+from config import token
 
 
 class Message:
@@ -19,11 +19,6 @@ class Message:
     def __send_telegram_message(telegram_id, message):
         if telegram_id is None:
             logging.warning('Telegram ID is None')
-            return
-
-        try:
-            token = config('TOKEN')  # .env
-        except UndefinedValueError:
             return
 
         try:

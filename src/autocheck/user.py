@@ -29,7 +29,7 @@ class User:
         except FileNotFoundError:
             self.__id = input("id:")
             self.__pw = getpass("pw:")
-            self.__telegram_id = input("telegram_id:")
+            self.__telegram_id = input("telegram_id(optional):")
             f = open('userinfo.txt', 'w')
             data = "%s\n%s\n%s" % (self.__id, fernet.encrypt(self.__pw.encode()).decode('utf-8'), self.__telegram_id)
             f.write(data)

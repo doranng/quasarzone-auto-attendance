@@ -2,10 +2,12 @@
 quasar-zone auto attendance check
 v0.2.0
 """
-from src.autocheck.message.message import Message
-from src.autocheck.user import User
-from src.autocheck.check import Check
-from src.autocheck.driver import Driver
+from autocheck.message.message import Message
+from autocheck.user import User
+from autocheck.check import Check
+
+
+from autocheck.driver import Driver
 
 
 def main():
