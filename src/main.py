@@ -1,6 +1,6 @@
 """
 quasar-zone auto attendance check
-v0.2.0
+v0.3.0
 """
 from autocheck.message.message import Message
 from autocheck.user import User
