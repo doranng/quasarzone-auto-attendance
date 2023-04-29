@@ -5,12 +5,13 @@ name = "pypi"
 
 [packages]
 selenium = "*"
-telegram = "*"
 token = "*"
 cryptography = "*"
 fernet = "*"
 undetected-chromedriver = "*"
 config = "*"
+pyinstaller = "*"
+python-telegram-bot = "*"
 
 [dev-packages]
 
