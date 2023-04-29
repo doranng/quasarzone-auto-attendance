@@ -1,7 +1,8 @@
 import logging
 from datetime import datetime
 import telegram
-from config import token
+from src.config import token
+import asyncio
 
 
 class Message:
@@ -13,17 +14,16 @@ class Message:
             if result['result'] == 'fail':
                 message = now.strftime('%Y-%m-%d %H:%M:%S') + '\n' + \
                           result['netloc'] + '/users/attendance' + '\n' + result['msg']
-                self.__send_telegram_message(user.telegram_id, message)
+                asyncio.run(self.__send_telegram_message(user.telegram_id, message))
 
     @staticmethod
-    def __send_telegram_message(telegram_id, message):
+    async def __send_telegram_message(telegram_id, message):
         if telegram_id is None:
             logging.warning('Telegram ID is None')
             return
 
         try:
             bot = telegram.Bot(token)
-            res = bot.sendMessage(chat_id=telegram_id, text=message)
-            return res
+            await bot.sendMessage(chat_id=telegram_id, text=message)
         except Exception:
             raise
