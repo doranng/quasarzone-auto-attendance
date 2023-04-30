@@ -9,8 +9,8 @@ from autocheck.WebDriver import WebDriver
 
 
 def main():
-    driver = WebDriver.create()
     user = User()
+    driver = WebDriver.create()
     if driver:
         Checker().check(driver, user)
     Messenger().send_messages(user)
