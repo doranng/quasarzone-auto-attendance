@@ -1,7 +1,7 @@
 import json
 from selenium.webdriver.common.by import By
 from urllib import parse
-from src.autocheck.message.MessagePool import MessagePool
+from autocheck.message.MessagePool import MessagePool
 
 
 class Checker:

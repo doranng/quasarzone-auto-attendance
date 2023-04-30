@@ -2,8 +2,7 @@ import undetected_chromedriver as uc
 from selenium import webdriver
 from selenium.common import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
-
-from src.autocheck.message.MessagePool import MessagePool
+from autocheck.message.MessagePool import MessagePool
 
 
 class WebDriver:

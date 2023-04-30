@@ -13,3 +13,5 @@ class MessagePool:
     def get_messages(self):
         return self.__messages
 
+    def clear_messages(self):
+        self.__messages = []
