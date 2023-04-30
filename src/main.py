@@ -1,7 +1,3 @@
-"""
-quasar-zone auto attendance check
-v0.3.0
-"""
 from autocheck.message.Messenger import Messenger
 from autocheck.User import User
 from autocheck.Checker import Checker
