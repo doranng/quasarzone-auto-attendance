@@ -130,3 +130,5 @@ dmypy.json
 
 config.py
 userinfo.txt
+.DS_Store
+.idea/sonarlint
