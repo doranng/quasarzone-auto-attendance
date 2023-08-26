@@ -1,3 +1,5 @@
+import multiprocessing
+
 from autocheck.message.Messenger import Messenger
 from autocheck.User import User
 from autocheck.Checker import Checker
@@ -13,4 +15,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # Pyinstaller fix
+    multiprocessing.freeze_support()
+
     main()
